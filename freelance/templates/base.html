@@ -9,6 +9,22 @@
 
     <body>
         <div class="container">
+            {% if messages %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <p></p>
+                        {% for message in messages %}
+                            <div class="alert alert-info alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}            
+
             <!-- This template "block" will be dynamically filled in by child templates. -->
             {% block content %}
                 <h3>
@@ -18,6 +34,7 @@
         </div>
 
         <!-- Latest compiled and minified JavaScript -->
+        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     </body>
 </html>
