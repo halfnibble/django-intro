@@ -10,7 +10,6 @@ class Freelancer(Person):
     """
     Represents a Person who freelances.
     """
-
     def __init__(self, name=None, rate=None, *args, **kwargs):
         # This runs the __init__() method from Person
         super(Freelancer, self).__init__(name=name, *args, **kwargs)
@@ -32,10 +31,9 @@ class Freelancer(Person):
         amount = Decimal(hours) * self.rate
         return "${0:.2f}".format(amount)
 
-
 print "-------Inheritance--------"
 
-# Instantiate Person instance
+# Instantiate Freelancer instance
 me = Freelancer(name=my_name, rate=120.00)
  
 print "My first name is:", me.first_name()
@@ -43,5 +41,3 @@ print "My first name is:", me.first_name()
  
 print "The client owes", me.calculate_invoice(hours=17.5)
 # Prints 'The client owes $2100.00'
-
-# bad_person = Freelancer(name='Ugly Jim', rate='All your base')
