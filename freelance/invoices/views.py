@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from django.contrib import messages
 
 from .models import Invoice
+from . import forms
 
 
 class InvoiceList(generic.ListView):
@@ -16,6 +17,22 @@ class InvoiceList(generic.ListView):
 class InvoiceDetail(generic.DetailView):
     model = Invoice
     context_object_name = 'invoice'
+
+
+class CreateInvoice(generic.CreateView):
+    model = Invoice
+    form_class = forms.InvoiceForm
+
+    def get_success_url(self):
+        return reverse('invoice_detail', kwargs={'pk': self.object.pk})
+
+
+class UpdateInvoice(generic.UpdateView):
+    model = Invoice
+    form_class = forms.InvoiceForm
+
+    def get_success_url(self):
+        return reverse('invoice_detail', kwargs={'pk': self.object.pk})
 
 
 class SendInvoice(generic.RedirectView):

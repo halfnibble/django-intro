@@ -13,6 +13,9 @@
                     <tr>
                         <th>
                             Inv #
+                        </th>
+                        <th>
+                            Company
                         </th>                        
                         <th>
                             Amount
@@ -26,8 +29,8 @@
                         <th>
                             Status
                         </th>
-                        <th>
-                            View
+                        <th width="177">
+                            View/Edit
                         </th>
                     </tr>
                 </thead>
@@ -36,6 +39,9 @@
                         <tr>
                             <td>
                                 {{ inv.id }}
+                            </td>
+                            <td>
+                                {{ inv.client.company }}
                             </td>
                             <td>
                                 ${{ inv.total|floatformat:2 }}
@@ -53,9 +59,12 @@
                             <td>
                                 {{ inv.get_status_display }}
                             </td>
-                            <td>
+                            <td class="text-right">
                                 <a class="btn btn-default" href="{% url 'invoice_detail' inv.id %}" role="button">
                                     View Invoice
+                                </a>
+                                <a class="btn btn-primary" href="{% url 'update_invoice' inv.id %}" role="button">
+                                    Edit
                                 </a>
                             </td>
                         </tr>
@@ -63,6 +72,21 @@
                 </tbody>
             </table>
 
+        </div>
+    </div>
+
+    <!-- Buttons section -->
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <hr>
+            {% if request.user.is_superuser %}
+                <a href="{% url 'create_invoice' %}" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-plus-sign"></span>
+                    Add Invoice
+                </a>
+                <hr>
+                <p></p>
+            {% endif %}
         </div>
     </div>
 {% endblock content %}

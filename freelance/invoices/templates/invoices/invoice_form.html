@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>Add/Edit Invoice</h1>
+    </div>
+
+    <form method="post" action=".">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                {% csrf_token %}
+                {{ form|crispy }} 
+            </div>
+        </div>
+        <br>
+
+        <!-- Submit section -->
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 text-right">
+                <hr>
+                <a href="{% url 'invoices' %}" class="btn btn-default">Cancel</a>
+                <input type="submit" class="btn btn-primary" value="Submit">
+                <hr>
+                <p></p>
+            </div>
+        </div>
+    </form>
+{% endblock content %}

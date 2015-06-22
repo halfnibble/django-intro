@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'clients',
     'invoices',
     'items',
+    'crispy_forms',
 
 )
 
@@ -74,6 +75,8 @@ TEMPLATES = [
         },
     },
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 WSGI_APPLICATION = 'freelance.wsgi.application'
 
