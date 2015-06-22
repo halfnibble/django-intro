@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Invoices <small>List View</small></h1>
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Invoices</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            Inv #
+                        </th>                        
+                        <th>
+                            Amount
+                        </th>
+                        <th>
+                            Invoiced On
+                        </th>
+                        <th>
+                            Terms
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                        <th>
+                            View
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for inv in invoices  %}
+                        <tr>
+                            <td>
+                                {{ inv.id }}
+                            </td>
+                            <td>
+                                ${{ inv.total|floatformat:2 }}
+                            </td>
+                            <td>
+                                {% if inv.invoiced_date %}
+                                    {{ inv.invoiced_date }}
+                                {% else %}
+                                    N/A
+                                {% endif %}                                
+                            </td>
+                            <td>
+                                {{ inv.terms }}
+                            </td>
+                            <td>
+                                {{ inv.get_status_display }}
+                            </td>
+                            <td>
+                                <a class="btn btn-default" href="{% url 'invoice_detail' inv.id %}" role="button">
+                                    View Invoice
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+{% endblock content %}
