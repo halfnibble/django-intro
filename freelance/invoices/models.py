@@ -1,0 +1,27 @@
+from django.db import models
+from clients.models import Client
+
+
+class Invoice(models.Model):
+    # Invoice terms options
+    TERMS = (
+        (15, 'NET15'),
+        (30, 'NET30'),
+        (60, 'NET60'),
+    )
+    # Status options
+    STATUS = (
+        ('PEND', 'Pending'),
+        ('INV' , 'Invoiced'),
+        ('PAID', 'Paid'),
+    )
+
+    client = models.ForeignKey(Client)
+    invoiced_date = models.DateField('Invoiced On', null=True, blank=True)
+    terms = models.IntegerField('Terms', choices=TERMS, default=15)
+    status = models.CharField('Status', max_length=4, choices=STATUS,
+        default='PEND')
+
+    def __str__(self):
+        return "Invoice #{0}. {1}.".format(self.id, self.get_status_display())
+
