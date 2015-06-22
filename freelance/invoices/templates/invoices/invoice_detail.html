@@ -1,2 +1,149 @@
 {% extends "base.html" %}
 
+{% block content %}
+    <div class="page-header">
+            <h1 class="text-center">INVOICE</h1>
+    </div>
+
+    <!-- Client info -->
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <address>
+                        <strong>{{ invoice.client.company }}</strong><br>
+                        Attn: {{ invoice.client.contact }}<br>
+                        <a href="mailto:#">{{ invoice.client.email }}</a>
+                    </address>
+                </div>                
+            </div>
+            <div class="col-md-8"></div>            
+        </div>
+    </div>
+    <br>
+
+    <!-- Invoice info -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Invoice Details
+                </div>
+                <div class="panel-body">
+                    <div class="row-fluid">
+                        <div class="col-md-4">
+                            Invoiced on: 
+                            <strong>
+                                {% if invoice.invoiced_date %}
+                                    {{ invoice.invoiced_date }}
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </strong>
+                        </div>
+                        <div class="col-md-4">
+                            Terms: <strong>{{ invoice.get_terms_display }}</strong>
+                        </div>
+                        <div class="col-md-4">
+                            Status: <strong>{{ invoice.get_status_display }}</strong>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <!-- Line Items -->
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Line Items</h3>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th class="text-center">
+                            #
+                        </th>
+                        <th>
+                            Name
+                        </th>                        
+                        <th>
+                            Descriptions
+                        </th>
+                        <th class="text-center">
+                            Qty.
+                        </th>
+                        <th class="text-center">
+                            Rate
+                        </th>
+                        <th class="text-center">
+                            Cost
+                        </th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <td colspan="5" class="text-right">
+                            <strong>Total</strong>
+                        </td>
+                        <td class="text-right">
+                            <strong>${{ invoice.total|floatformat:2 }}</strong>
+                        </td>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    {% for item in invoice.lineitem_set.all  %}
+                        <tr>
+                            <td class="text-center">
+                                {{ forloop.counter }}.
+                            </td>
+                            <td>
+                                {{ item.name }}
+                            </td>
+                            <td>
+                                {{ item.description }}                                
+                            </td>
+                            <td class="text-right">
+                                {{ item.quantity }}
+                            </td>
+                            <td class="text-right">
+                                ${{ item.rate }}
+                            </td>
+                            <td class="text-right">
+                                ${{ item.cost|floatformat:2 }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br>
+
+    <!-- Freelancer section -->
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <hr>
+            {% if request.user.is_superuser %}
+                <a href="{% url 'invoices' %}" class="btn btn-default">
+                    <span class="glyphicon glyphicon-th-list"></span>
+                    Invoice List
+                </a>
+
+                <a href="#" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-share-alt"></span>
+                    Send Invoice
+                </a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}

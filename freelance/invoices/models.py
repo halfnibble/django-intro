@@ -25,11 +25,9 @@ class Invoice(models.Model):
 
     @property
     def total(self):
-        print 'eh?'
         total = Decimal('0.00')
 
         for item in self.lineitem_set.all():
-            print "item cost:", item.cost
             total += item.cost
 
         return total
